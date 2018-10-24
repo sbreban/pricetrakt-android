@@ -1,0 +1,8 @@
+query GetProductByNameQuery($name:String!) {
+    getProductByName(name:$name) {
+      prices {
+        price
+        state
+      }
+    }
+}

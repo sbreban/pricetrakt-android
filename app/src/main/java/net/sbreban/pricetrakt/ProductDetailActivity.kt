@@ -42,8 +42,8 @@ class ProductDetailActivity : AppCompatActivity() {
 			// using a fragment transaction.
 			val fragment = ProductDetailFragment().apply {
 				arguments = Bundle().apply {
-					putString(ProductDetailFragment.ARG_ITEM_ID,
-							intent.getStringExtra(ProductDetailFragment.ARG_ITEM_ID))
+					putString(ProductDetailFragment.PRODUCT_NAME,
+							intent.getStringExtra(ProductDetailFragment.PRODUCT_NAME))
 				}
 			}
 
