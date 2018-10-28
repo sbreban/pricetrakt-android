@@ -29,8 +29,8 @@ class ProductListActivity : AppCompatActivity() {
 
     companion object {
 
-        private val BASE_URL = "http://192.168.0.104:8080/graphql"
-        val Log = Logger.getLogger(ProductListActivity::class.java.name)
+        private const val BASE_URL = "http://sergiu-pc:8080/graphql"
+        val Log = Logger.getLogger(ProductListActivity::class.java.name)!!
 
         fun setupApollo(): ApolloClient {
             val okHttp = OkHttpClient

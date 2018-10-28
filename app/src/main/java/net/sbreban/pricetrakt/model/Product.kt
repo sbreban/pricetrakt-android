@@ -1,9 +1,7 @@
 package net.sbreban.pricetrakt.model
 
 data class Product(
-		val id: Int = 0,
+        val id: Int = 0,
 
-		val name: String = "",
-
-		val shopEntries: List<ShopEntry> = mutableListOf()
+        val name: String = ""
 )
