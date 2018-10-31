@@ -1,4 +1,4 @@
-package net.sbreban.pricetrakt
+package net.sbreban.pricetrakt.viewmodel
 
 import GetProductByNameQuery
 import GetProductByNameQuery.Price
@@ -8,13 +8,14 @@ import android.arch.lifecycle.ViewModel
 import com.apollographql.apollo.ApolloCall
 import com.apollographql.apollo.api.Response
 import com.apollographql.apollo.exception.ApolloException
+import net.sbreban.pricetrakt.ProductListActivity
 import java.util.logging.Logger
 import java.util.stream.Collectors
 
-class PriceViewModel : ViewModel() {
+class PriceListViewModel : ViewModel() {
 
     companion object {
-        val Log = Logger.getLogger(PriceViewModel::class.java.name)
+        val Log = Logger.getLogger(PriceListViewModel::class.java.name)
     }
 
     private lateinit var prices: MutableLiveData<List<Price>>

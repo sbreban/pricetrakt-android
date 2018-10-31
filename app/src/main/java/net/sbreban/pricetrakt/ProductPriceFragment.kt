@@ -9,19 +9,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.price_fragment.*
+import net.sbreban.pricetrakt.viewmodel.PriceListViewModel
 import java.util.logging.Logger
 import java.util.stream.Collectors
 
 
-class PriceFragment : Fragment() {
+class ProductPriceFragment : Fragment() {
 
     companion object {
-        fun newInstance() = PriceFragment()
+        fun newInstance() = ProductPriceFragment()
         const val PRODUCT_NAME = "product_name"
-        val Log = Logger.getLogger(PriceFragment::class.java.name)
+        val Log = Logger.getLogger(ProductPriceFragment::class.java.name)
     }
 
-    private lateinit var viewModel: PriceViewModel
+    private lateinit var viewModel: PriceListViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -32,10 +33,10 @@ class PriceFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         arguments?.let {
-            if (it.containsKey(PriceFragment.PRODUCT_NAME)) {
-                val productName = it.getString(PriceFragment.PRODUCT_NAME)
-                viewModel = ViewModelProviders.of(this).get(PriceViewModel::class.java)
-                // TODO: Use the ViewModel
+            if (it.containsKey(ProductPriceFragment.PRODUCT_NAME)) {
+                val productName = it.getString(ProductPriceFragment.PRODUCT_NAME)
+                viewModel = ViewModelProviders.of(this).get(PriceListViewModel::class.java)
+
                 viewModel.getPrices(productName).observe(this, Observer<List<Price>> { prices ->
                     // update UI
                     val pricesText = prices?.stream()?.map(Price::price)?.collect(Collectors.toList()).toString()

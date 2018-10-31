@@ -1,6 +1,7 @@
 package net.sbreban.pricetrakt
 
-import GetAllProductsQuery
+import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
@@ -10,14 +11,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import com.apollographql.apollo.ApolloCall
 import com.apollographql.apollo.ApolloClient
-import com.apollographql.apollo.api.Response
-import com.apollographql.apollo.exception.ApolloException
 import kotlinx.android.synthetic.main.activity_product_list.*
 import kotlinx.android.synthetic.main.product_list.*
 import kotlinx.android.synthetic.main.product_list_content.view.*
 import net.sbreban.pricetrakt.model.Product
+import net.sbreban.pricetrakt.viewmodel.ProductListViewModel
 import okhttp3.OkHttpClient
 import java.util.logging.Logger
 
@@ -25,7 +24,7 @@ class ProductListActivity : AppCompatActivity() {
 
     private var twoPane: Boolean = false
 
-    private lateinit var client: ApolloClient
+    private lateinit var viewModel: ProductListViewModel
 
     companion object {
 
@@ -52,7 +51,6 @@ class ProductListActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_product_list)
-        client = setupApollo()
 
         setSupportActionBar(toolbar)
         toolbar.title = title
@@ -66,21 +64,11 @@ class ProductListActivity : AppCompatActivity() {
             twoPane = true
         }
 
-        client.query(GetAllProductsQuery.builder().build()).enqueue(object : ApolloCall.Callback<GetAllProductsQuery.Data>() {
-            override fun onFailure(e: ApolloException) {
-                Log.info(e.message.toString())
-            }
+        viewModel = ViewModelProviders.of(this).get(ProductListViewModel::class.java)
+        viewModel.getProducts().observe(this, Observer<List<Product>> { products ->
+            // update UI
+            setupRecyclerView(product_list, products?.toMutableList()!!)
 
-            override fun onResponse(response: Response<GetAllProductsQuery.Data>) {
-                Log.info(" " + response.data()?.allProducts)
-                runOnUiThread {
-                    val items: MutableList<Product> = mutableListOf()
-                    response.data()?.allProducts?.forEach {
-                        items.add(Product(id = it.id().toInt(), name = it.name()))
-                    }
-                    setupRecyclerView(product_list, items)
-                }
-            }
         })
     }
 
@@ -99,9 +87,9 @@ class ProductListActivity : AppCompatActivity() {
             onClickListener = View.OnClickListener { v ->
                 val item = v.tag as Product
                 if (twoPane) {
-                    val fragment = PriceFragment().apply {
+                    val fragment = ProductPriceFragment().apply {
                         arguments = Bundle().apply {
-                            putString(PriceFragment.PRODUCT_NAME, item.name)
+                            putString(ProductPriceFragment.PRODUCT_NAME, item.name)
                         }
                     }
                     parentActivity.supportFragmentManager
@@ -109,8 +97,8 @@ class ProductListActivity : AppCompatActivity() {
                             .replace(R.id.product_detail_container, fragment)
                             .commit()
                 } else {
-                    val intent = Intent(v.context, ProductDetailActivity::class.java).apply {
-                        putExtra(PriceFragment.PRODUCT_NAME, item.name)
+                    val intent = Intent(v.context, ProductPricesActivity::class.java).apply {
+                        putExtra(ProductPriceFragment.PRODUCT_NAME, item.name)
                     }
                     v.context.startActivity(intent)
                 }

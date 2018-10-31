@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_product_detail.*
 
-class ProductDetailActivity : AppCompatActivity() {
+class ProductPricesActivity : AppCompatActivity() {
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -16,10 +16,10 @@ class ProductDetailActivity : AppCompatActivity() {
 		supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
 		if (savedInstanceState == null) {
-			val fragment = PriceFragment().apply {
+			val fragment = ProductPriceFragment().apply {
 				arguments = Bundle().apply {
-					putString(PriceFragment.PRODUCT_NAME,
-							intent.getStringExtra(PriceFragment.PRODUCT_NAME))
+					putString(ProductPriceFragment.PRODUCT_NAME,
+							intent.getStringExtra(ProductPriceFragment.PRODUCT_NAME))
 				}
 			}
 
