@@ -99,9 +99,9 @@ class ProductListActivity : AppCompatActivity() {
             onClickListener = View.OnClickListener { v ->
                 val item = v.tag as Product
                 if (twoPane) {
-                    val fragment = ProductDetailFragment().apply {
+                    val fragment = PriceFragment().apply {
                         arguments = Bundle().apply {
-                            putString(ProductDetailFragment.PRODUCT_NAME, item.name)
+                            putString(PriceFragment.PRODUCT_NAME, item.name)
                         }
                     }
                     parentActivity.supportFragmentManager
@@ -110,7 +110,7 @@ class ProductListActivity : AppCompatActivity() {
                             .commit()
                 } else {
                     val intent = Intent(v.context, ProductDetailActivity::class.java).apply {
-                        putExtra(ProductDetailFragment.PRODUCT_NAME, item.name)
+                        putExtra(PriceFragment.PRODUCT_NAME, item.name)
                     }
                     v.context.startActivity(intent)
                 }

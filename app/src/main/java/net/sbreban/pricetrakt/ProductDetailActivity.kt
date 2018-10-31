@@ -16,10 +16,10 @@ class ProductDetailActivity : AppCompatActivity() {
 		supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
 		if (savedInstanceState == null) {
-			val fragment = ProductDetailFragment().apply {
+			val fragment = PriceFragment().apply {
 				arguments = Bundle().apply {
-					putString(ProductDetailFragment.PRODUCT_NAME,
-							intent.getStringExtra(ProductDetailFragment.PRODUCT_NAME))
+					putString(PriceFragment.PRODUCT_NAME,
+							intent.getStringExtra(PriceFragment.PRODUCT_NAME))
 				}
 			}
 
