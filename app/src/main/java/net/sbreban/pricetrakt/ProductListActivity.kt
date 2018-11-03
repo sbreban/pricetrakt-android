@@ -73,13 +73,13 @@ class ProductListActivity : AppCompatActivity() {
     }
 
     private fun setupRecyclerView(recyclerView: RecyclerView, items: MutableList<Product>) {
-        recyclerView.adapter = SimpleItemRecyclerViewAdapter(this, items, twoPane)
+        recyclerView.adapter = PriceRecyclerViewAdapter(this, items, twoPane)
     }
 
-    class SimpleItemRecyclerViewAdapter(private val parentActivity: ProductListActivity,
-                                        private val values: List<Product>,
-                                        private val twoPane: Boolean) :
-            RecyclerView.Adapter<SimpleItemRecyclerViewAdapter.ViewHolder>() {
+    class PriceRecyclerViewAdapter(private val parentActivity: ProductListActivity,
+                                   private val values: List<Product>,
+                                   private val twoPane: Boolean) :
+            RecyclerView.Adapter<PriceRecyclerViewAdapter.ViewHolder>() {
 
         private val onClickListener: View.OnClickListener
 
